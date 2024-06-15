@@ -337,7 +337,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		int top = this.getY();
 		int bottom = top + this.getHeight();
 
-		ScissorManager.push(this.getX(), this.getY()+1, this.getWidth(), this.getHeight());
+		ScissorManager.push(this.getX(), this.getY()+1, this.getWidth(), this.getHeight()-1);
 		this.entries.forEach(e -> e.render(graphics, mouseX, mouseY, delta));
 		ScissorManager.pop();
 
