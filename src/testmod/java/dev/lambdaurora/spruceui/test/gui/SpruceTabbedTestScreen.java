@@ -52,7 +52,7 @@ public class SpruceTabbedTestScreen extends SpruceScreen {
 		});
 		this.tabbedWidget.addSeparatorEntry(Text.literal("Separator"));
 		this.tabbedWidget.addTabEntry(Text.literal("Option Test"), Text.literal("useful for config stuff.").formatted(Formatting.GRAY),
-				(width, height) -> SpruceUITest.get().buildOptionList(Position.origin(), width, height));
+				(width, height) -> SpruceUITest.get().buildOptionList(Position.origin(), width, height, this));
 		this.tabbedWidget.addTabEntry(Text.literal("Text Area"), Text.literal("to edit stuff on multiple lines.").formatted(Formatting.GRAY),
 				(width, height) -> SpruceUITest.buildTextAreaContainer(Position.origin(), width, height,
 						textArea -> {

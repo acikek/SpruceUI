@@ -121,4 +121,12 @@ public interface SpruceWidget extends SprucePositioned, SpruceElement, Selectabl
 	boolean isDragging();
 
 	void setDragging(boolean dragging);
+
+	default int getXEnd(){
+		return getX()+getWidth();
+	}
+
+	default int getYEnd(){
+		return getY()+getHeight();
+	}
 }
