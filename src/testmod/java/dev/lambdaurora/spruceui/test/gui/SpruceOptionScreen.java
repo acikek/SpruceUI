@@ -47,7 +47,7 @@ public class SpruceOptionScreen extends SpruceScreen {
 
 		// Button list.
 		//this.list = new ButtonListWidget(this.client, this.width, this.height, 43, this.height - 29 - this.getTextHeight(), 25);
-		this.list = SpruceUITest.get().buildOptionList(Position.of(0, 22), this.width, this.height - 35 - 22);
+		this.list = SpruceUITest.get().buildOptionList(Position.of(0, 22), this.width, this.height - 35 - 22, this);
 		SpruceUITest.get().resetConsumer = btn -> {
 			// Re-initialize the screen to update all the values.
 			this.init(this.client, this.client.getWindow().getScaledWidth(), this.client.getWindow().getScaledHeight());

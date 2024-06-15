@@ -41,13 +41,13 @@ public final class ScissorManager {
 	}
 
 	public static void popScaleFactor() {
-		if (SCALE_FACTOR_STACK.size() == 0)
+		if (SCALE_FACTOR_STACK.isEmpty())
 			return;
 		SCALE_FACTOR_STACK.removeDouble(SCALE_FACTOR_STACK.size() - 1);
 	}
 
 	public static double getCurrentScaleFactor() {
-		if (SCALE_FACTOR_STACK.size() == 0)
+		if (SCALE_FACTOR_STACK.isEmpty())
 			return 1.f;
 		return SCALE_FACTOR_STACK.getDouble(SCALE_FACTOR_STACK.size() - 1);
 	}

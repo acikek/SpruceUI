@@ -11,6 +11,7 @@ package dev.lambdaurora.spruceui.screen;
 
 import dev.lambdaurora.spruceui.SprucePositioned;
 import dev.lambdaurora.spruceui.Tooltip;
+import dev.lambdaurora.spruceui.background.ScreenBackground;
 import dev.lambdaurora.spruceui.navigation.NavigationDirection;
 import dev.lambdaurora.spruceui.util.ScissorManager;
 import dev.lambdaurora.spruceui.widget.SpruceElement;
@@ -34,9 +35,26 @@ import java.util.function.Supplier;
  */
 public abstract class SpruceScreen extends Screen implements SprucePositioned, SpruceElement {
 	protected double scaleFactor;
+	private ScreenBackground background = null;
 
 	protected SpruceScreen(Text title) {
 		super(title);
+	}
+
+	/**
+	 * Sets screen background render
+	 * @param background background or null to use vanilla
+	 */
+	public void setBackground(ScreenBackground background) {
+		this.background = background;
+	}
+
+	/**
+	 * Get background render
+	 * @return background render if found, or null if default is used
+	 */
+	public ScreenBackground getBackground() {
+		return background;
 	}
 
 	@Override
@@ -107,6 +125,20 @@ public abstract class SpruceScreen extends Screen implements SprucePositioned, S
 	}
 
 	/* Render */
+
+	@Override
+	public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+		if (getBackground() == null) {
+			// use vanilla background
+			super.renderBackground(graphics, mouseX, mouseY, delta);
+		} else {
+			if (this.client.world == null) {
+				this.renderPanorama(graphics, delta);
+			}
+			this.method_57734(delta);
+			background.render(graphics, this, mouseX, mouseY, delta);
+		}
+	}
 
 	@Override
 	public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {

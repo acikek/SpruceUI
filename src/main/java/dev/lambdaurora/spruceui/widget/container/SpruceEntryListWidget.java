@@ -18,6 +18,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormats;
 import dev.lambdaurora.spruceui.Position;
 import dev.lambdaurora.spruceui.background.Background;
+import dev.lambdaurora.spruceui.background.DefaultBackground;
 import dev.lambdaurora.spruceui.background.DirtTexturedBackground;
 import dev.lambdaurora.spruceui.border.Border;
 import dev.lambdaurora.spruceui.border.EmptyBorder;
@@ -55,7 +56,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 	private final List<E> entries = new Entries();
 	private final int anchorYOffset;
 	private double scrollAmount;
-	private Background background = DirtTexturedBackground.DARKENED;
+	private Background background = DefaultBackground.LIST;
 	private boolean renderTransition = true;
 	private Border border = EmptyBorder.EMPTY_BORDER;
 	private boolean scrolling = false;
@@ -89,7 +90,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 
 	@Override
 	public void setBackground(Background background) {
-		this.background = background;
+		this.background = background == null ? DefaultBackground.LIST : background;
 	}
 
 	/**
@@ -336,7 +337,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		int top = this.getY();
 		int bottom = top + this.getHeight();
 
-		ScissorManager.push(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		ScissorManager.push(this.getX(), this.getY()+1, this.getWidth(), this.getHeight()-1);
 		this.entries.forEach(e -> e.render(graphics, mouseX, mouseY, delta));
 		ScissorManager.pop();
 

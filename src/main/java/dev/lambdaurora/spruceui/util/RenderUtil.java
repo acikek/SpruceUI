@@ -13,7 +13,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.Tessellator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormats;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.util.Identifier;
 
@@ -22,6 +22,11 @@ public final class RenderUtil {
 	 * The dirt background texture used in pre-1.20.5 versions.
 	 */
 	public static final Identifier LEGACY_OPTIONS_BACKGROUND_TEXTURE = new Identifier("spruceui", "textures/gui/legacy_options_background.png");
+
+	/**
+	 * Background texture used in resource packs
+	 */
+	public static final Identifier OPTIONS_BACKGROUND_TEXTURE = new Identifier("minecraft", "textures/gui/options_background.png");
 
 	private RenderUtil() {
 		throw new IllegalStateException("RenderUtil only contains static-definitions.");
@@ -39,6 +44,14 @@ public final class RenderUtil {
 	 */
 	public static void renderBackgroundTexture(int x, int y, int width, int height, float vOffset) {
 		renderBackgroundTexture(x, y, width, height, vOffset, 64, 64, 64, 255);
+	}
+
+	public static Identifier getBackgroundTexture(){
+		if (MinecraftClient.getInstance().getResourceManager().getResource(OPTIONS_BACKGROUND_TEXTURE).isEmpty()) {
+			return LEGACY_OPTIONS_BACKGROUND_TEXTURE;
+		} else {
+			return OPTIONS_BACKGROUND_TEXTURE;
+		}
 	}
 
 	/**
@@ -60,7 +73,7 @@ public final class RenderUtil {
 		var bufferBuilder = tessellator.getBufferBuilder();
 		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		RenderSystem.setShaderColor(1.f, 1.f, 1.f, 1.f);
-		RenderSystem.setShaderTexture(0, LEGACY_OPTIONS_BACKGROUND_TEXTURE);
+		RenderSystem.setShaderTexture(0, getBackgroundTexture());
 
 		int right = x + width;
 		int bottom = y + height;

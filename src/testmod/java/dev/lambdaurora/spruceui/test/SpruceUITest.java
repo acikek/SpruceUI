@@ -11,7 +11,9 @@ package dev.lambdaurora.spruceui.test;
 
 import dev.lambdaurora.spruceui.Position;
 import dev.lambdaurora.spruceui.SpruceTexts;
+import dev.lambdaurora.spruceui.background.DirtTexturedBackground;
 import dev.lambdaurora.spruceui.option.*;
+import dev.lambdaurora.spruceui.screen.SpruceScreen;
 import dev.lambdaurora.spruceui.widget.SpruceButtonWidget;
 import dev.lambdaurora.spruceui.widget.container.SpruceContainerWidget;
 import dev.lambdaurora.spruceui.widget.container.SpruceOptionListWidget;
@@ -49,6 +51,7 @@ public class SpruceUITest implements ClientModInitializer {
 	private boolean toggleBoolean;
 	private double aDouble;
 	private TestEnum cyclingValue = TestEnum.FIRST;
+	private WidgetBackground bgType = WidgetBackground.DEFAULT;
 	private int anInt;
 	private float aFloat;
 	private double anInputDouble;
@@ -135,7 +138,7 @@ public class SpruceUITest implements ClientModInitializer {
 		INSTANCE = this;
 	}
 
-	public SpruceOptionListWidget buildOptionList(Position position, int width, int height) {
+	public SpruceOptionListWidget buildOptionList(Position position, int width, int height, SpruceScreen screen) {
 		var list = new SpruceOptionListWidget(position, width, height);
 
 		list.addOptionEntry(this.booleanOption, this.checkboxOption);
@@ -150,7 +153,19 @@ public class SpruceUITest implements ClientModInitializer {
 		list.addSingleOptionEntry(this.floatInputOption);
 		list.addSingleOptionEntry(this.doubleInputOption);
 		list.addOptionEntry(this.actionOption, this.cyclingOption);
-
+		list.addOptionEntry(new SpruceCyclingOption("bg_type",
+				amount -> {
+                    this.bgType = this.bgType.next();
+					list.setBackground(bgType.apply(list));
+                },
+				option -> option.getDisplayText(Text.literal(bgType.name())),
+				Text.literal("Widget background type")),
+				new SpruceBooleanOption("Screen bg", () -> screen.getBackground() != null, v -> {
+					screen.setBackground(v ? DirtTexturedBackground.NORMAL : null);
+				}, Text.of("Screen background")));
+		for (int i = 0; i < 10; i++) {
+			list.addSingleOptionEntry(this.toggleSwitchOption);
+		}
 		return list;
 	}
 
