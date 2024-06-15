@@ -49,6 +49,10 @@ public abstract class SpruceScreen extends Screen implements SprucePositioned, S
 		this.background = background;
 	}
 
+	/**
+	 * Get background render
+	 * @return background render if found, or null if default is used
+	 */
 	public ScreenBackground getBackground() {
 		return background;
 	}
@@ -124,7 +128,8 @@ public abstract class SpruceScreen extends Screen implements SprucePositioned, S
 
 	@Override
 	public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-		if (getBackground() == null){
+		if (getBackground() == null) {
+			// use vanilla background
 			super.renderBackground(graphics, mouseX, mouseY, delta);
 		} else {
 			if (this.client.world == null) {

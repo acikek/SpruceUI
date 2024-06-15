@@ -90,7 +90,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 
 	@Override
 	public void setBackground(Background background) {
-		this.background = background;
+		this.background = background == null ? DefaultBackground.LIST : background;
 	}
 
 	/**
